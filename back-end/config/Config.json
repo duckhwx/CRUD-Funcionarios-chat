@@ -1,0 +1,14 @@
+{
+    "port": "8081",
+    "database": {
+        "user": "sa",
+        "password": "123",
+        "server": "DESKTOP-EJ47PRO\\SQLEXPRESS",
+        "database": "GERENCIARFUNCIONARIOS",
+        "connectionTimeout": 60000,
+        "pool": {
+            "idleTimeoutMillis": 60000,
+            "max": 100
+        }
+    }
+}
