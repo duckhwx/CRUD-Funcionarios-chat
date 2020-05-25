@@ -11,7 +11,7 @@ exports.getMessages = (callback) => {
 		const messages = data.recordset;
 		for (let index = 0; index < messages.length; index += 1) {
 			const message = messages[index];
-			message.DATA = moment.utc(message.DATA).format('DD-MM-YYYY/HH:mm');
+			message.DATA = moment.utc(message.DATA).format('DD-MM-YYYY hh:mm');
 		}
 		callback(status, messages);
 	});
@@ -26,7 +26,7 @@ exports.sendMessage = (params, callback) => {
 	};
 
 	Chat.insertMessage(messageObj, (status) => {
-		messageObj.DATA = moment(messageObj.DATA).format('DD-MM-YYYY HH:mm');
+		messageObj.DATA = moment(messageObj.DATA).format('DD-MM-YYYY hh:mm');
 		callback(messageObj, status);
 	});
 };
