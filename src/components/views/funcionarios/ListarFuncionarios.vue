@@ -43,30 +43,48 @@
 										<v-card-title>
 												{{funcionario.nome}}
 												<v-spacer></v-spacer>
-												<v-btn
-												class="mx-1"
-												dark
-												@click="getRoute('ListarFuncionario', funcionario.id, null)">
-														<v-icon>
-															fas fa-file
-														</v-icon>
-												</v-btn>
-												<v-btn
-												class="mx-1"
-												dark
-												@click="getRoute('CadUpdFuncionario', funcionario.id, 'Atualizar')">
-														<v-icon>
-															fas fa-pen
-														</v-icon>
-												</v-btn>
-												<v-btn
-												class="mx-1"
-												dark
-												@click="callDialogDelete(funcionario.id)">
-														<v-icon>
-															fas fa-times
-														</v-icon>
-												</v-btn>
+												<v-tooltip top>
+													<template v-slot:activator="{ on }">
+														<v-btn
+														class="mx-1"
+														dark
+														v-on="on"
+														@click="getRoute('ListarFuncionario', funcionario.id, null)">
+															<v-icon>
+																fas fa-file
+															</v-icon>
+														</v-btn>
+													</template>
+														<span>Dados do Funcionário</span>
+												</v-tooltip>
+												<v-tooltip top>
+													<template v-slot:activator="{ on }">
+														<v-btn
+														class="mx-1"
+														dark
+														v-on="on"
+														@click="getRoute('CadUpdFuncionario', funcionario.id, 'Atualizar')">
+															<v-icon>
+																fas fa-pen
+															</v-icon>
+														</v-btn>
+													</template>
+													<span>Atualizar Funcionário</span>
+												</v-tooltip>
+												<v-tooltip top>
+													<template v-slot:activator="{ on }">
+														<v-btn
+														class="mx-1"
+														dark
+														v-on="on"
+														@click="callDialogDelete(funcionario.id)">
+															<v-icon>
+																fas fa-times
+															</v-icon>
+														</v-btn>
+													</template>
+													<span>Excluir Funcionário</span>
+												</v-tooltip>
 										</v-card-title>
 										<v-card-subtitle>
 												{{funcionario.cargo}}

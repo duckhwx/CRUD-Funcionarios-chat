@@ -125,6 +125,7 @@ export default {
 					// função RegExp para configurar a exibição ao tipo CPF
 					const funcionario = response.data.data;
 					funcionario.CPF = funcionario.CPF.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g, '$1.$2.$3-$4');
+					funcionario.SALARIO = this.setSalarioString(funcionario.SALARIO);
 
 					this.funcionario.nome = funcionario.NOME;
 					this.funcionario.email = funcionario.EMAIL;
@@ -136,6 +137,17 @@ export default {
 					this.funcionario.dataAprovacao = funcionario.DATA_CONTRATACAO;
 					this.funcionario.situacao = funcionario.SITUACAO;
 				});
+		},
+		// Função que transforma o salario em string e ajusta casas decimais que terminam em 0
+		setSalarioString (salario) {
+			salario = salario.toString().replace(/\./, ',');
+			let splitedSal = salario.split(',');
+			if (splitedSal.length > 1 && splitedSal[1].length === 1) {
+				salario += '0';
+				return salario;
+			}
+
+			return salario;
 		},
 		// reset nas informações de configuração do Snackbar
 		resetSnackbar () {

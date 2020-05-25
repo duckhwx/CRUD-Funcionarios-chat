@@ -94,7 +94,8 @@
 										<v-text-field
 										v-model="salario"
 										:rules="salarioRules"
-										placeholder="Ex: 000,00"
+										v-mask="[('#####,##'), ('####,##'), ('###,##')]"
+										placeholder="Ex: 000.00"
 										label="Salario"
 										></v-text-field>
 									</v-flex>
@@ -219,7 +220,7 @@ export default {
 			salario: '',
 			salarioRules: [
 				v => !!v || 'Salário requisitado',
-				v => /^[0-9]*$/.test(v) || 'Caracteres invalidos'
+				v => /^[0-9,.]*$/.test(v) || 'Caracteres invalidos'
 			],
 			menuDate: false,
 			dateMenu: false,
@@ -259,7 +260,7 @@ export default {
 		insertFuncionario () {
 			if (this.$refs.formulario.validate()) {
 				this.cpf = this.cpf.replace(/[.-]/g, '');
-				this.salario = parseInt(this.salario);
+				this.salario = parseFloat(this.salario.replace(/[,]/, '.'));
 				this.idade = parseInt(this.idade);
 
 				const objectForm = {
@@ -295,7 +296,7 @@ export default {
 		updateFuncionario () {
 			if (this.$refs.formulario.validate()) {
 				this.cpf = this.cpf.replace(/[.-]/g, '');
-				this.salario = parseInt(this.salario);
+				this.salario = this.salario.replace(/[,]/, '.');
 				this.idade = parseInt(this.idade);
 
 				const objectForm = {
@@ -344,6 +345,7 @@ export default {
 
 					const funcionario = response.data.data;
 					funcionario.CPF = funcionario.CPF.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g, '$1.$2.$3-$4');
+					funcionario.SALARIO = this.setSalarioString(funcionario.SALARIO)
 
 					this.nome = funcionario.NOME;
 					this.email = funcionario.EMAIL;
@@ -355,6 +357,17 @@ export default {
 					this.date = funcionario.DATA_CONTRATACAO;
 					this.situacao = funcionario.SITUACAO;
 				});
+		},
+		// Função que transforma o salario em string e ajusta casas decimais que terminam em 0
+		setSalarioString (salario) {
+			salario = salario.toString().replace(/\./, ',');
+			let splitedSal = salario.split(',');
+			if (splitedSal.length > 1 && splitedSal[1].length === 1) {
+				salario += '0';
+				return salario;
+			}
+
+			return salario;
 		},
 		// reset nas informações de configuração do Snackbar
 		resetSnackbar () {
