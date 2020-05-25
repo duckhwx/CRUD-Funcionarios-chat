@@ -191,6 +191,7 @@ export default {
 			cpf: '',
 			cpfRules: [
 				v => !!v || 'CPF requisitado',
+				v => v.length >= 14 || 'CPF deve ter 11 caracteres',
 				v => (v && v.length <= 14) || 'CPF deve ter menos de 12 caracteres',
 				v => /^[0-9.-]*$/.test(v) || 'Caracteres Invalidos'
 			],
@@ -253,6 +254,10 @@ export default {
 				}
 			}
 			this.getFuncById(this.$route.params.userId);
+		}
+
+		if (!this.$route.params.action) {
+			this.$router.push({ name: 'ListarFuncionarios' });
 		}
 	},
 	methods: {

@@ -106,7 +106,13 @@ export default {
 		}
 	},
 	mounted () {
-		this.getFuncById(this.$route.params.userId);
+		if (!this.$route.params.userId) {
+			this.$router.push({ name: 'ListarFuncionarios' });
+		}
+
+		if (this.$route.params.userId) {
+			this.getFuncById(this.$route.params.userId);
+		}
 	},
 	methods: {
 		// Requisição ao back-end para coletar os dados do funcionário e exibir no front
